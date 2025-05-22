@@ -2,14 +2,14 @@
 Blockly.Blocks['arduino_setup'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField("Arduino Setup");
+            .appendField("Setup");
         this.appendStatementInput("DO")
             .setCheck(null);
         this.setColour(120);
         this.setTooltip("The setup() function is called once when your sketch starts. Use it to initialize variables, pin modes, start using libraries, etc.");
         this.setHelpUrl("https://www.arduino.cc/reference/en/language/structure/setup-and-loop/setup/");
         this.setDeletable(false);
-        this.setMovable(false);
+        this.setMovable(true);
     }
 };
 
@@ -23,14 +23,14 @@ Blockly.Arduino['arduino_setup'] = function (block) {
 Blockly.Blocks['arduino_loop'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField("Arduino Loop");
+            .appendField("Loop");
         this.appendStatementInput("DO")
             .setCheck(null);
         this.setColour(120);
         this.setTooltip("The loop() function is executed repeatedly after setup(). It's the core of most sketches.");
         this.setHelpUrl("https://www.arduino.cc/reference/en/language/structure/setup-and-loop/loop/");
         this.setDeletable(false);
-        this.setMovable(false);
+        this.setMovable(true);
     }
 };
 

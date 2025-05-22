@@ -32,10 +32,6 @@
 <body>
     <div id="blocklyDiv"></div>
     <xml id="toolbox" style="display: none">
-        <category name="Core Functions" colour="120">
-            <block type="arduino_setup"></block>
-            <block type="arduino_loop"></block>
-        </category>
         <category name="Digital & Analog I/O" colour="230">
             <block type="arduino_digital_write"></block>
             <block type="arduino_digital_read"></block>
@@ -58,6 +54,13 @@
             scrollbars: true,
             trashcan: true
         });
+        var xmlText = '<xml>' +
+            '<block type="arduino_setup" x="50" y="50"></block>' +
+            '<block type="arduino_loop" x="50" y="150"></block>' +
+            '</xml>';
+
+        var xml = Blockly.utils.xml.textToDom(xmlText);
+        Blockly.Xml.domToWorkspace(xml, workspace);
     </script>
 </body>
 
