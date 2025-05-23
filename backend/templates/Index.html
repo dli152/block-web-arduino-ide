@@ -12,6 +12,8 @@
     <script src="/static/generator.js"></script>
     <script src="/static/blocks.js"></script>
 
+    <link rel="favicon" href="/static/favicon.ico">
+
 
     <style>
         html,
@@ -48,18 +50,8 @@
             <block type="arduino_serial_begin"></block>
             <block type="arduino_serial_print"></block>
         </category>
-        <!--Vairables and functions-->
-        <category name="Variables" colour="330">
-            <block type="variables_set"></block>
-            <block type="variables_get"></block>
-            <block type="variables_declare"></block>
-        </category>
-        <category name="Functions" colour="290">
-            <block type="procedures_defnoreturn"></block>
-            <block type="procedures_callnoreturn"></block>
-            <block type="procedures_ifreturn"></block>
-            <block type="procedures_ifreturn_check"></block>
-        </category>
+        <category name="Variables" custom="VARIABLE"></category>
+        <category name="Functions" custom="PROCEDURE"></category>
     </xml>
 
     <script>

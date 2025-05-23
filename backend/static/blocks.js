@@ -278,13 +278,20 @@ Blockly.Arduino['arduino_serial_print'] = function (block) {
     return 'Serial.println(' + text + ');\n';
 };
 
-Blockly.Blocks['arduino_function_return_value'] = {
+Blockly.Blocks['arduino_function'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField("Return value");
-        this.setOutput(true, null);
-        this.setColour(230);
-        this.setTooltip("Returns a value from a function.");
-        this.setHelpUrl("");
+            .appendField("Function");
+        this.appendValueInput("NAME")
+            .setCheck("String")
+            .appendField("Name");
+        this.appendStatementInput("DO")
+            .setCheck(null)
+            .appendField("Do");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(120);
+        this.setTooltip("Defines a custom function that can be called in the main program.");
+        this.setHelpUrl(""); // Consider adding a relevant help URL
     }
 }
