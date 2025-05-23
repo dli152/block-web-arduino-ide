@@ -44,9 +44,28 @@ Blockly.Blocks['arduino_digital_write'] = {
     init: function () {
         this.appendDummyInput()
             .appendField("Set digital pin");
-        this.appendValueInput("PIN") // Change to value input for more flexibility (e.g., variables)
-            .setCheck("Number")
-            .appendField("pin"); // Label for the input
+        this.appendDummyInput()
+            .appendField(new Blockly.FieldDropdown([
+                ["1", "1"],
+                ["2", "2"],
+                ["3", "3"],
+                ["4", "4"],
+                ["5", "5"],
+                ["6", "6"],
+                ["7", "7"],
+                ["8", "8"],
+                ["9", "9"],
+                ["10", "10"],
+                ["11", "11"],
+                ["12", "12"],
+                ["13", "13"],
+                ["A0", "A0"],
+                ["A1", "A1"],
+                ["A2", "A2"],
+                ["A3", "A3"],
+                ["A4", "A4"],
+                ["A5", "A5"]
+            ]), "STATE");
         this.appendDummyInput()
             .appendField("to");
         this.appendValueInput("STATE") // Change to value input (Boolean or Number)
@@ -87,6 +106,79 @@ Blockly.Arduino['arduino_digital_read'] = function (block) {
     var pin = Blockly.Arduino.valueToCode(block, 'PIN', Blockly.Arduino.ORDER_ATOMIC) || '0';
     return ['digitalRead(' + pin + ')', Blockly.Arduino.ORDER_ATOMIC];
 };
+
+Blockly.Blocks['arduino_analog_read'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("Read analog pin");
+        this.appendDummyInput()
+            .appendField(new Blockly.FieldDropdown([
+                ["A0", "A0"],
+                ["A1", "A1"],
+                ["A2", "A2"],
+                ["A3", "A3"],
+                ["A4", "A4"],
+                ["A5", "A5"]
+            ]), "PIN");
+        this.setOutput(true, "Number"); // Returns a number between 0 and 1023
+        this.setColour(230);
+        this.setTooltip("Reads the value from a specified analog pin, which can be between 0 and 1023.");
+        this.setHelpUrl("https://www.arduino.cc/reference/en/language/functions/analog-io/analogread/");
+    }
+}
+
+Blockly.Arduino['arduino_analog_read'] = function (block) {
+    var pin = block.getFieldValue('PIN');
+    // Use analogRead function to read the value from the specified analog pin
+    return ['analogRead(' + pin + ')', Blockly.Arduino.ORDER_ATOMIC];
+}
+
+Blockly.Blocks['arduino_analog_write'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("Set analog pin");
+        this.appendDummyInput()
+            .appendField(new Blockly.FieldDropdown([
+                ["A1", "A1"],
+                ["A2", "A2"],
+                ["A3", "A3"],
+                ["A4", "A4"],
+                ["A5", "A5"]
+            ]), "PIN");
+        this.appendDummyInput()
+            .appendField("to");
+        this.appendValueInput("VALUE") // Change to value input (0-255)
+            .setCheck("Number");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(230);
+        this.setTooltip("Write a PWM value (0-255) to an analog pin.");
+        this.setHelpUrl("https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/");
+    }
+}
+
+Blockly.Arduino['arduino_analog_read'] = function (block) {
+    var pin = block.getFieldValue('PIN');
+    // Use analogRead function to read the value from the specified analog pin
+    return ['analogRead(' + pin + ')', Blockly.Arduino.ORDER_ATOMIC];
+}
+
+Blockly.Blocks['number_input'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField(new Blockly.FieldNumber(0, -Infinity, Infinity, 0), "NUMBER")
+        this.setOutput(true, "Number");
+        this.setColour(230);
+        this.setTooltip("Input a number.");
+        this.setHelpUrl("https://www.gnu.org/software/gnu-c-manual/gnu-c-manual.html"); // gnu-c-manual, find it yourself in the numerous directories
+    }
+}
+
+Blockly.Arduino['number_input'] = function (block) {
+    var number = block.getFieldValue('NUMBER');
+    // Return the number as a string
+    return [number, Blockly.Arduino.ORDER_ATOMIC];
+}
 
 // Math Block (already pretty good)
 Blockly.Blocks['arduino_math'] = {
@@ -185,3 +277,14 @@ Blockly.Arduino['arduino_serial_print'] = function (block) {
     var text = Blockly.Arduino.valueToCode(block, 'TEXT', Blockly.Arduino.ORDER_ATOMIC) || '""'; // Default to empty string if nothing connected
     return 'Serial.println(' + text + ');\n';
 };
+
+Blockly.Blocks['arduino_function_return_value'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("Return value");
+        this.setOutput(true, null);
+        this.setColour(230);
+        this.setTooltip("Returns a value from a function.");
+        this.setHelpUrl("");
+    }
+}
