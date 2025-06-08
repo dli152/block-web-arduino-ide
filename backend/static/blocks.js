@@ -118,7 +118,13 @@ Blockly.Blocks['arduino_analog_read'] = {
                 ["A2", "A2"],
                 ["A3", "A3"],
                 ["A4", "A4"],
-                ["A5", "A5"]
+                ["A5", "A5"],
+                ["3", "3"],
+                ["5", "5"],
+                ["6", "6"],
+                ["9", "9"],
+                ["10", "10"],
+                ["11", "11"],
             ]), "PIN");
         this.setOutput(true, "Number"); // Returns a number between 0 and 1023
         this.setColour(230);
@@ -238,6 +244,30 @@ Blockly.Arduino['arduino_repeat'] = function (block) {
     var code = 'for (int i = 0; i < ' + count + '; i++) {\n' + statements + '}\n';
     return code;
 };
+
+Blockly.Blocks['delay'] = {
+    init: function () {
+        this.appendDummyInput()
+            .appendField("Delay for");
+        this.appendValueInput("TIME")
+            .setCheck("Number")
+            .appendField("ms");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(120);
+        this.setTooltip("Pauses the program for a specified number of milliseconds.");
+        this.setHelpUrl("https://www.arduino.cc/reference/en/language/functions/time/delay/");
+        let shadowBlock = this.workspace.newBlock('number_input');
+        shadowBlock.setShadow(true);
+        shadowBlock.getField('NUMBER').setValue(5);
+        this.getInput('TIME').connection.connect(shadowBlock.outputConnection);
+    },
+}
+
+Blockly.Arduino['delay'] = function (block) {
+    var time = Blockly.Arduino.valueToCode(block, 'TIME', Blockly.Arduino.ORDER_ATOMIC) || '1000'; // Default to 1000ms if not connected
+    return 'delay(' + time + ');\n';
+}
 
 // Serial Begin Block
 Blockly.Blocks['arduino_serial_begin'] = {
