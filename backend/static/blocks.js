@@ -234,6 +234,10 @@ Blockly.Blocks['arduino_repeat'] = {
         this.setColour(120);
         this.setTooltip("Repeats the contained blocks a specified number of times.");
         this.setHelpUrl(""); // Consider adding a relevant help URL
+        let shadowBlock = this.workspace.newBlock('number_input');
+        shadowBlock.setShadow(true);
+        shadowBlock.getField('NUMBER').setValue(5); // Default repeat count
+        this.getInput('COUNT').connection.connect(shadowBlock.outputConnection);
     }
 };
 
