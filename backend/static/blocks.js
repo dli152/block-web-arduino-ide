@@ -186,6 +186,22 @@ Blockly.Arduino['number_input'] = function (block) {
     return [number, Blockly.Arduino.ORDER_ATOMIC];
 }
 
+Blockly.Blocks['text'] = {
+    init: function () {
+        this.appendDummyInput('IN')
+            .appendField(new Blockly.FieldTextInput(''), 'NAME');
+        this.setOutput(true, 'String');
+        this.setTooltip('');
+        this.setHelpUrl('');
+        this.setColour('105');
+    }
+};
+
+Blockly.Arduino['text'] = function (block) {
+    var input = block.getFieldvalue('IN')
+    return [`"${input}"`, Blockly.Arduino.ORDER_ATOMIC]
+}
+
 // Math Block (already pretty good)
 Blockly.Blocks['arduino_math'] = {
     init: function () {
@@ -328,4 +344,25 @@ Blockly.Blocks['arduino_function'] = {
         this.setTooltip("Defines a custom function that can be called in the main program.");
         this.setHelpUrl(""); // Consider adding a relevant help URL
     }
-}
+};
+
+Blockly.Blocks['New Variable'] = {
+    init: function () {
+        this.appendDummyInput('')
+            .appendField('Create a new')
+            .appendField(new Blockly.FieldDropdown([
+                ['Number', 'f'],
+                ['Char Array', 'car']
+            ]), 'TYPE')
+            .appendField('with name')
+            .appendField(new Blockly.FieldTextInput('New Variable'), 'NAME')
+            .appendField('and assign');
+        this.appendValueInput('NAME');
+        this.setInputsInline(true)
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setTooltip('');
+        this.setHelpUrl('');
+        this.setColour(30);
+    }
+};
