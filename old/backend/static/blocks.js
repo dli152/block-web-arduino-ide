@@ -258,11 +258,7 @@ Blockly.Blocks['arduino_repeat'] = {
 };
 
 Blockly.Arduino['arduino_repeat'] = function (block) {
-    var count = Blockly.Arduino.valueToCode(block, 'COUNT', Blockly.Arduino.ORDER_ATOMIC) || '0';
-    var statements = Blockly.Arduino.statementToCode(block, 'DO');
-    // Sanitize count to ensure it's a valid integer for the loop.
-    var code = 'for (int i = 0; i < ' + count + '; i++) {\n' + statements + '}\n';
-    return code;
+    return `for (int i = 0; i < ${Blockly.Arduino.valueToCode(block, 'COUNT', Blockly.Arduino.ORDER_ATOMIC) || '0'} ; i++) {\n${Blockly.Arduino.statementToCode(block, 'DO')} }\n`;
 };
 
 Blockly.Blocks['delay'] = {
@@ -285,8 +281,7 @@ Blockly.Blocks['delay'] = {
 }
 
 Blockly.Arduino['delay'] = function (block) {
-    var time = Blockly.Arduino.valueToCode(block, 'TIME', Blockly.Arduino.ORDER_ATOMIC) || '1000'; // Default to 1000ms if not connected
-    return 'delay(' + time + ');\n';
+    return `delay(${Blockly.Arduino.valueToCode(block, 'TIME', Blockly.Arduino.ORDER_ATOMIC) || '1000'});\n`;
 }
 
 // Serial Begin Block
@@ -304,9 +299,8 @@ Blockly.Blocks['arduino_serial_begin'] = {
     }
 };
 
-Blockly.Arduino['arduino_serial_begin'] = function (block) {
-    var baud = Blockly.Arduino.valueToCode(block, 'BAUD', Blockly.Arduino.ORDER_ATOMIC) || '9600';
-    return 'Serial.begin(' + baud + ');\n';
+Blockly.Arduino['arduino_serial_begin'] = function (block) { 
+    return `Serial.begin(${Blockly.Arduino.valueToCode(block, 'BAUD', Blockly.Arduino.ORDER_ATOMIC) || '9600'});\n`;
 };
 
 // Serial Print Block
@@ -328,36 +322,18 @@ Blockly.Arduino['arduino_serial_print'] = function (block) {
     return 'Serial.println(' + text + ');\n';
 };
 
-Blockly.Blocks['arduino_function'] = {
-    init: function () {
-        this.appendDummyInput()
-            .appendField("Function");
-        this.appendValueInput("NAME")
-            .setCheck("String")
-            .appendField("Name");
-        this.appendStatementInput("DO")
-            .setCheck(null)
-            .appendField("Do");
-        this.setPreviousStatement(true, null);
-        this.setNextStatement(true, null);
-        this.setColour(120);
-        this.setTooltip("Defines a custom function that can be called in the main program.");
-        this.setHelpUrl(""); // Consider adding a relevant help URL
-    }
-};
-
-Blockly.Blocks['New Variable'] = {
+Blockly.Blocks['new_variable'] = {
     init: function () {
         this.appendDummyInput('')
             .appendField('Create a new')
             .appendField(new Blockly.FieldDropdown([
-                ['Number', 'f'],
-                ['Char Array', 'car']
+                ['Number', 'double'],
+                ['Boolean', 'bool']
             ]), 'TYPE')
             .appendField('with name')
             .appendField(new Blockly.FieldTextInput('New Variable'), 'NAME')
             .appendField('and assign');
-        this.appendValueInput('NAME');
+        this.appendValueInput('VALUE');
         this.setInputsInline(true)
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
@@ -366,3 +342,13 @@ Blockly.Blocks['New Variable'] = {
         this.setColour(30);
     }
 };
+
+Blockly.Arduino['new_variable'] = function (block) {
+    return `${Blockly.Arduino.valueToCode(block, 'TYPE', Blockly.Arduino.ORDER_ATOMIC)} ${Blockly.Arduino.valueToCode(block, 'NAME', Blockly.Arduino.ORDER_ATOMIC)} = ${Blockly.Arduino.valueToCode(block, 'VALUE', Blockly.Arduino.ORDER_ATOMIC)};\n`;
+}
+
+Blockly.Blocks['set_variable'] = {
+    init: {
+        
+    }
+}
